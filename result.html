@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>診断結果</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Yu Gothic",sans-serif;
+}
+
+body{
+
+background:linear-gradient(180deg,#FFF7E6,#FFE5A8);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+height:100vh;
+
+overflow:hidden;
+
+}
+
+.container{
+
+width:92%;
+max-width:420px;
+
+text-align:center;
+
+}
+
+#loading{
+
+font-size:32px;
+
+font-weight:bold;
+
+color:#ff5d83;
+
+animation:blink .6s infinite;
+
+}
+
+#capsule{
+
+display:none;
+
+margin:30px auto;
+
+width:180px;
+
+animation:shake .5s infinite;
+
+}
+
+#capsule img{
+
+width:100%;
+
+}
+
+#result{
+
+display:none;
+
+}
+
+#result h1{
+
+font-size:42px;
+
+color:#ff4d6d;
+
+margin-bottom:20px;
+
+}
+
+#result img{
+
+width:220px;
+
+margin:25px auto;
+
+display:block;
+
+}
+
+#result p{
+
+font-size:22px;
+
+line-height:1.8;
+
+font-weight:bold;
+
+}
+
+button{
+
+margin-top:40px;
+
+padding:18px 45px;
+
+font-size:22px;
+
+border:none;
+
+border-radius:50px;
+
+background:#ff5d83;
+
+color:white;
+
+cursor:pointer;
+
+}
+
+@keyframes shake{
+
+0%{transform:rotate(-5deg);}
+50%{transform:rotate(5deg);}
+100%{transform:rotate(-5deg);}
+
+}
+
+@keyframes blink{
+
+50%{
+
+opacity:.2;
+
+}
+
+}
+
+.confetti{
+
+position:fixed;
+
+font-size:30px;
+
+animation:fall 3s linear forwards;
+
+}
+
+@keyframes fall{
+
+0%{
+
+transform:translateY(-100px);
+
+}
+
+100%{
+
+transform:translateY(110vh);
+
+}
+
+}
+
+@keyframes logoFloat{
+
+0%{
+transform:translateX(-30px) rotate(-5deg);
+}
+
+50%{
+transform:translateX(30px) rotate(5deg);
+}
+
+100%{
+transform:translateX(-30px) rotate(-5deg);
+}
+
+}
+
+#capsule img{
+    width:100%;
+    animation:logoFloat .8s infinite ease-in-out;
+}
+
+@keyframes itemOpen{
+
+0%{
+
+opacity:0;
+
+transform:scale(.2) rotate(-30deg);
+
+}
+
+60%{
+
+transform:scale(1.15);
+
+}
+
+100%{
+
+opacity:1;
+
+transform:scale(1);
+
+}
+
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="loading">
+
+🎰 ガチャガチャ・・・
+
+</div>
+
+<div id="capsule">
+
+<img src="https://image.rakuten.co.jp/kayotoys/cabinet/shop/logo1200.jpg">
+
+</div>
+
+<div id="result">
+
+<h1>
+
+🎉 おめでとう！
+
+</h1>
+
+<img id="item">
+
+<p id="text"></p>
+
+<button onclick="location.href='index.html'">
+
+もう一回遊ぶ
+
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+const loading = document.getElementById("loading");
+const capsule = document.getElementById("capsule");
+const result = document.getElementById("result");
+const item = document.getElementById("item");
+const text = document.getElementById("text");
+const answers=JSON.parse(localStorage.getItem("result"));
+
+let prize = {
+    title:"ぴよこちゃん",
+    image:"https://image.rakuten.co.jp/kayotoys/cabinet/item/squeeze/4580791113203_001.jpg"
+};
+
+item.src = prize.image;
+item.style.animation = "itemOpen .6s ease";
+
+if(answers.join("")=="111"){
+
+prize={
+
+title:"レトロカメラ賞",
+
+image:"img/camera.png"
+
+};
+
+}
+
+setTimeout(()=>{
+
+loading.style.display="none";
+
+capsule.style.display="block";
+
+},1200);
+
+setTimeout(()=>{
+
+capsule.style.display="none";
+
+result.style.display="block";
+
+item.src=prize.image;
+
+text.innerHTML=
+
+"あなたへの景品は<br><br><span style='font-size:36px;color:#ff4d6d;'>"+prize.title+"</span><br><br>スタッフへこの画面を見せてください";
+
+confetti();
+
+},3200);
+
+function confetti(){
+
+for(let i=0;i<40;i++){
+
+let c=document.createElement("div");
+
+c.className="confetti";
+
+c.innerHTML="🎉";
+
+c.style.left=Math.random()*100+"vw";
+
+c.style.animationDelay=Math.random()+"s";
+
+document.body.appendChild(c);
+
+}
+
+}
+
+</script>
+
+</body>
+
+</html>

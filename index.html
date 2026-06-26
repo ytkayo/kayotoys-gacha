@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>ガチャ診断</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Yu Gothic",sans-serif;
+}
+
+body{
+
+background:linear-gradient(
+180deg,
+#FFF9EA,
+#FFECC8
+);
+
+height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+overflow:hidden;
+
+}
+
+.container{
+
+width:92%;
+max-width:420px;
+
+text-align:center;
+
+}
+
+h1{
+
+font-size:42px;
+
+color:#ff4d6d;
+
+margin-bottom:20px;
+
+text-shadow:
+0 4px 0 white,
+0 8px 12px rgba(0,0,0,.15);
+
+}
+
+.sub{
+
+font-size:20px;
+
+font-weight:bold;
+
+margin-bottom:35px;
+
+color:#444;
+
+line-height:1.7;
+
+}
+
+.gacha{
+
+width:220px;
+
+margin:30px auto;
+
+animation:
+float 2s ease-in-out infinite;
+
+}
+
+.gacha img{
+
+width:100%;
+
+}
+
+.start{
+
+margin-top:20px;
+
+background:#ff5d83;
+
+color:white;
+
+font-size:26px;
+
+font-weight:bold;
+
+padding:20px 40px;
+
+border:none;
+
+border-radius:60px;
+
+cursor:pointer;
+
+box-shadow:
+0 10px 20px rgba(0,0,0,.2);
+
+animation:
+pulse 1s infinite;
+
+transition:.2s;
+
+}
+
+.start:hover{
+
+transform:scale(1.05);
+
+}
+
+.footer{
+
+margin-top:40px;
+
+font-size:12px;
+
+color:#888;
+
+}
+
+@keyframes pulse{
+
+0%{transform:scale(1);}
+50%{transform:scale(1.08);}
+100%{transform:scale(1);}
+
+}
+
+@keyframes float{
+
+0%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0);}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🎉 ガチャ診断 🎉</h1>
+
+<div class="sub">
+
+あなたにピッタリの景品を<br>
+
+GETしよう！
+
+</div>
+
+<div class="gacha">
+
+<img src="img/gacha.png">
+
+</div>
+
+<button
+class="start"
+onclick="location.href='question.html'">
+
+ガチャを始める！
+
+</button>
+
+<div class="footer">
+
+© KAYOTOYS
+
+</div>
+
+</div>
+
+</body>
+
+</html>
