@@ -1,340 +1,161 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>診断結果</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Result</title>
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:"Yu Gothic",sans-serif;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Yu Gothic",sans-serif}
 body{
-
 background:linear-gradient(180deg,#FFF7E6,#FFE5A8);
-
+height:100svh;
 display:flex;
-
 justify-content:center;
-
 align-items:center;
-
-height:100vh;
-
 overflow:hidden;
-
 }
-
 .container{
-
-width:92%;
-max-width:420px;
-
+    position:relative;
+    width:min(92vw,420px);
+    height:95svh;
+}
+.scene{
+position:absolute;
+inset:0;
+display:none;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 text-align:center;
-
 }
-
-#loading{
-
-font-size:32px;
-
-font-weight:bold;
-
-color:#ff5d83;
-
-animation:blink .6s infinite;
-
+#loading{font-size:30px;font-weight:bold;color:#ff4d6d;animation:blink .6s infinite}
+#capsule{display:none}
+.ball{
+width:120px;height:120px;position:relative;
+animation:roll .8s ease-in-out infinite;
 }
-
-#capsule{
-
-display:none;
-
-margin:30px auto;
-
-width:180px;
-
-animation:shake .5s infinite;
-
+.top,.bottom{
+position:absolute;left:0;width:120px;height:60px;border:4px solid #555;
 }
-
-#capsule img{
-
-width:100%;
-
-}
-
-#result{
-
-display:none;
-
-}
-
-#result h1{
-
-font-size:42px;
-
-color:#ff4d6d;
-
-margin-bottom:20px;
-
-}
-
-#result img{
-
-width:220px;
-
-margin:25px auto;
-
+.top{top:0;background:#ff4d4d;border-radius:120px 120px 0 0}
+.bottom{bottom:0;background:#fff;border-radius:0 0 120px 120px}
+.ball.open .top{animation:topOpen .5s forwards}
+.ball.open .bottom{animation:bottomOpen .5s forwards}
+#result h1{font-size:38px;color:#ff4d6d;margin-bottom:8px}
+#item{
 display:block;
-
-}
-
-#result p{
-
-font-size:22px;
-
-line-height:1.8;
-
-font-weight:bold;
-
-}
-
-button{
-
-margin-top:40px;
-
-padding:18px 45px;
-
-font-size:22px;
-
-border:none;
-
-border-radius:50px;
-
-background:#ff5d83;
-
-color:white;
-
-cursor:pointer;
-
-}
-
-@keyframes shake{
-
-0%{transform:rotate(-5deg);}
-50%{transform:rotate(5deg);}
-100%{transform:rotate(-5deg);}
-
-}
-
-@keyframes blink{
-
-50%{
-
-opacity:.2;
-
-}
-
-}
-
-.confetti{
-
-position:fixed;
-
-font-size:30px;
-
-animation:fall 3s linear forwards;
-
-}
-
-@keyframes fall{
-
-0%{
-
-transform:translateY(-100px);
-
-}
-
-100%{
-
-transform:translateY(110vh);
-
-}
-
-}
-
-@keyframes logoFloat{
-
-0%{
-transform:translateX(-30px) rotate(-5deg);
-}
-
-50%{
-transform:translateX(30px) rotate(5deg);
-}
-
-100%{
-transform:translateX(-30px) rotate(-5deg);
-}
-
-}
-
-#capsule img{
-    width:100%;
-    animation:logoFloat .8s infinite ease-in-out;
-}
-
-@keyframes itemOpen{
-
-0%{
-
+width:min(52vw,220px);
 opacity:0;
-
-transform:scale(.2) rotate(-30deg);
-
+transform:scale(.2);
 }
-
-60%{
-
-transform:scale(1.15);
-
+#item.show{animation:itemShow .5s forwards}
+#text{margin-top:6px;font-size:20px;font-weight:bold;line-height:1.35}
+.start{
+margin-top:14px;
+padding:14px 30px;
+font-size:20px;
+font-weight:900;
+color:#fff;
+background:linear-gradient(180deg,#ff7a2f,#ff3b30);
+border:4px solid #ffd84d;
+border-radius:999px;
+text-decoration:none;
+box-shadow:0 6px 0 #d7281d;
+display:inline-block;
 }
-
-100%{
-
-opacity:1;
-
-transform:scale(1);
-
+.confetti{position:fixed;font-size:24px;animation:fall 3s linear forwards}
+@keyframes blink{50%{opacity:.2}}
+@keyframes roll{
+0%,100%{transform:translateX(-10px) rotate(-8deg)}
+50%{transform:translateX(10px) rotate(8deg)}
 }
-
+@keyframes topOpen{to{transform:translateY(-45px) rotate(-25deg);opacity:.2}}
+@keyframes bottomOpen{to{transform:translateY(45px) rotate(25deg);opacity:.2}}
+@keyframes itemShow{
+0%{opacity:0;transform:scale(.2)}
+70%{transform:scale(1.15)}
+100%{opacity:1;transform:scale(1)}
+}
+@keyframes fall{
+from{transform:translateY(-50px)}
+to{transform:translateY(110vh)}
 }
 </style>
-
 </head>
-
 <body>
-
 <div class="container">
+<div id="loading" class="scene">🎰 ガチャガチャ・・・</div>
 
-<div id="loading">
-
-🎰 ガチャガチャ・・・
-
+<div id="capsule" class="scene">
+<div class="ball" id="ball">
+<div class="top"></div>
+<div class="bottom"></div>
+</div>
 </div>
 
-<div id="capsule">
-
-<img src="https://image.rakuten.co.jp/kayotoys/cabinet/shop/logo1200.jpg">
-
-</div>
-
-<div id="result">
-
-<h1>
-
-🎉 おめでとう！
-
-</h1>
-
-<img id="item">
-
+<div id="result" class="scene">
+<h1>🎉 おめでとう！</h1>
+<img id="item" alt="">
 <p id="text"></p>
-
-<button onclick="location.href='index.html'">
-
-もう一回遊ぶ
-
-</button>
-
+<a class="start" href="index.html">もう一回遊ぶ！</a>
 </div>
-
 </div>
 
 <script>
-
-const loading = document.getElementById("loading");
-const capsule = document.getElementById("capsule");
-const result = document.getElementById("result");
-const item = document.getElementById("item");
-const text = document.getElementById("text");
-const answers=JSON.parse(localStorage.getItem("result"));
-
-let prize = {
-    title:"ぴよこちゃん",
-    image:"https://image.rakuten.co.jp/kayotoys/cabinet/item/squeeze/4580791113203_001.jpg"
-};
-
-item.src = prize.image;
-item.style.animation = "itemOpen .6s ease";
-
-if(answers.join("")=="111"){
-
-prize={
-
-title:"レトロカメラ賞",
-
-image:"img/camera.png"
-
-};
-
+const prizes={
+"default":{
+title:"ぴよこちゃん",
+image:"https://image.rakuten.co.jp/kayotoys/cabinet/item/squeeze/4580791113203_001.jpg"
+},
+"11111":{
+title:"レトロチャームカメラ",
+image:"https://image.rakuten.co.jp/kayotoys/cabinet/shop/logo1200.jpg"
 }
+};
+
+const answers=JSON.parse(localStorage.getItem("result"))||[];
+const prize=prizes[answers.join("")]||prizes.default;
+
+const loading=document.getElementById("loading");
+const capsule=document.getElementById("capsule");
+const result=document.getElementById("result");
+const ball=document.getElementById("ball");
+const item=document.getElementById("item");
+const text=document.getElementById("text");
+
+loading.style.display="flex";
 
 setTimeout(()=>{
-
-loading.style.display="none";
-
-capsule.style.display="block";
-
+ loading.style.display="none";
+ capsule.style.display="flex";
 },1200);
 
 setTimeout(()=>{
+ ball.classList.add("open");
+},2500);
 
-capsule.style.display="none";
-
-result.style.display="block";
-
-item.src=prize.image;
-
-text.innerHTML=
-
-"あなたへの景品は<br><br><span style='font-size:36px;color:#ff4d6d;'>"+prize.title+"</span><br><br>スタッフへこの画面を見せてください";
-
-confetti();
-
+setTimeout(()=>{
+ capsule.style.display="none";
+ result.style.display="flex";
+ item.src=prize.image;
+ item.classList.add("show");
+ text.innerHTML=
+"あなたへの景品は<br><span style='font-size:1.5em;color:#ff4d6d;'>"
++prize.title+
+"</span><br>スタッフへこの画面をご提示ください";
+ confetti();
 },3200);
 
 function confetti(){
-
-for(let i=0;i<40;i++){
-
-let c=document.createElement("div");
-
-c.className="confetti";
-
-c.innerHTML="🎉";
-
-c.style.left=Math.random()*100+"vw";
-
-c.style.animationDelay=Math.random()+"s";
-
-document.body.appendChild(c);
-
+ for(let i=0;i<24;i++){
+   const c=document.createElement("div");
+   c.className="confetti";
+   c.textContent="🎉";
+   c.style.left=Math.random()*100+"vw";
+   c.style.animationDelay=(Math.random()*0.5)+"s";
+   document.body.appendChild(c);
+ }
 }
-
-}
-
 </script>
-
 </body>
-
 </html>
