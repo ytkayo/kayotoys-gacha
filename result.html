@@ -1,18 +1,41 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Result</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:"Yu Gothic",sans-serif}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"M PLUS Rounded 1c","Yu Gothic",sans-serif;
+}
 body{
-background:linear-gradient(180deg,#FFF7E6,#FFE5A8);
-height:100svh;
-display:flex;
-justify-content:center;
-align-items:center;
-overflow:hidden;
+
+    background:
+        linear-gradient(
+            rgba(255,249,234,.78),
+            rgba(255,236,200,.82)
+        ),
+        url("https://www.rakuten.ne.jp/gold/kayotoys/event/gacha/index_03.png");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    height:100svh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+
 }
 .container{
     position:relative;
@@ -63,11 +86,34 @@ text-decoration:none;
 box-shadow:0 6px 0 #d7281d;
 display:inline-block;
 }
-.confetti{position:fixed;font-size:24px;animation:fall 3s linear forwards}
+.confetti{
+
+    position:fixed;
+
+    top:-40px;
+
+    pointer-events:none;
+
+    animation:fall 3.5s linear forwards;
+
+    z-index:999;
+
+}
 @keyframes blink{50%{opacity:.2}}
 @keyframes roll{
-0%,100%{transform:translateX(-10px) rotate(-8deg)}
-50%{transform:translateX(10px) rotate(8deg)}
+
+0%{
+    transform:translateX(-8px) rotate(-6deg);
+}
+
+50%{
+    transform:translateX(8px) rotate(6deg);
+}
+
+100%{
+    transform:translateX(-8px) rotate(-6deg);
+}
+
 }
 @keyframes topOpen{to{transform:translateY(-45px) rotate(-25deg);opacity:.2}}
 @keyframes bottomOpen{to{transform:translateY(45px) rotate(25deg);opacity:.2}}
@@ -77,14 +123,129 @@ display:inline-block;
 100%{opacity:1;transform:scale(1)}
 }
 @keyframes fall{
-from{transform:translateY(-50px)}
-to{transform:translateY(110vh)}
+
+0%{
+
+opacity:1;
+
+transform:
+translateY(-50px)
+translateX(0)
+rotate(0deg);
+
+}
+
+25%{
+
+transform:
+translateY(25vh)
+translateX(-20px)
+rotate(90deg);
+
+}
+
+50%{
+
+transform:
+translateY(50vh)
+translateX(20px)
+rotate(180deg);
+
+}
+
+75%{
+
+transform:
+translateY(75vh)
+translateX(-15px)
+rotate(270deg);
+
+}
+
+100%{
+
+opacity:0;
+
+transform:
+translateY(110vh)
+translateX(25px)
+rotate(360deg);
+
+}
+
+}
+.loadingTitle{
+
+font-size:38px;
+
+font-weight:800;
+
+color:#ff4d6d;
+
+text-shadow:
+0 3px 0 #fff,
+0 6px 12px rgba(0,0,0,.18);
+
+animation:pulse .8s infinite;
+
+}
+
+.loadingSub{
+
+margin-top:12px;
+
+font-size:20px;
+
+color:#666;
+
+}
+
+.loadingDots{
+
+margin-top:30px;
+
+font-size:36px;
+
+letter-spacing:12px;
+
+animation:dots .8s infinite;
+
+}
+
+@keyframes dots{
+
+50%{
+
+opacity:.2;
+
+}
+
 }
 </style>
 </head>
 <body>
 <div class="container">
-<div id="loading" class="scene">🎰 ガチャガチャ・・・</div>
+<div id="loading" class="scene">
+
+<div class="loadingTitle">
+
+🎰 ガチャ抽選中！
+
+</div>
+
+<div class="loadingSub">
+
+景品を選んでいます…
+
+</div>
+
+<div class="loadingDots">
+
+● ● ●
+
+</div>
+
+</div>
 
 <div id="capsule" class="scene">
 <div class="ball" id="ball">
@@ -147,14 +308,29 @@ setTimeout(()=>{
 },3200);
 
 function confetti(){
- for(let i=0;i<24;i++){
-   const c=document.createElement("div");
-   c.className="confetti";
-   c.textContent="🎉";
-   c.style.left=Math.random()*100+"vw";
-   c.style.animationDelay=(Math.random()*0.5)+"s";
-   document.body.appendChild(c);
- }
+
+    const icons=["🎉","✨","⭐","🎊","💛","🩷"];
+
+    for(let i=0;i<40;i++){
+
+        const c=document.createElement("div");
+
+        c.className="confetti";
+
+        c.textContent=icons[Math.floor(Math.random()*icons.length)];
+
+        c.style.left=Math.random()*100+"vw";
+
+        c.style.animationDelay=(Math.random()*0.8)+"s";
+
+        c.style.fontSize=(18+Math.random()*18)+"px";
+
+        c.style.transform=`rotate(${Math.random()*360}deg)`;
+
+        document.body.appendChild(c);
+
+    }
+
 }
 </script>
 </body>
